@@ -34,41 +34,29 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Principal (1K-1M): ");
-        Integer principal = scanner.nextInt();
+        Principal principal = new Principal();
+        AnnualInterestRate annualInterestRate = new AnnualInterestRate();
+        Period period= new Period();
 
-        while (principal < 1000 || principal > 1000000) {
-            System.out.println("Enter a number between 1,000 and 1,000,000.");
-            System.out.print("Principal (1K-1M): ");
-            principal = scanner.nextInt();
-        }
+        int principalValue = principal.getValue(scanner);
+        float annualInterestRateValue = annualInterestRate.getValue(scanner);
+        int periodValue = period.getValue(scanner);
 
-        System.out.print("Annual Interest Rate (0-10): ");
-        Float annualInterestRate = scanner.nextFloat();
+        double mortgage = calculateMortgage(annualInterestRateValue, periodValue, principalValue);
+        String mortgageCurrencyInstance = getCurrencyInstance(mortgage);
 
-        while (annualInterestRate <= 0 || annualInterestRate > 10) {
-            System.out.println("Enter a value greater than 0 and less then or equal to 10.");
-            System.out.print("Annual Interest Rate (0-10): ");
-            annualInterestRate = scanner.nextFloat();
-        }
+        System.out.println(mortgageCurrencyInstance);
 
-        System.out.print("Period (Years 1-30): ");
-        Integer period = scanner.nextInt();
+    }
 
-        while (period < 1 || period > 30) {
-            System.out.println("Enter a value between 1 to 30.");
-            System.out.print("Period (Years 1-30): ");
-            period = scanner.nextInt();
-        }
-
-
+    public static double calculateMortgage(Float annualInterestRate, Integer period, Integer principal) {
         Float monthInterestRate = annualInterestRate / 100 / 12;
         Integer periodMonths = period * 12;
 
-        double mortgage = (principal * (monthInterestRate * (Math.pow((1 + monthInterestRate), periodMonths)))) / ((Math.pow((1 + monthInterestRate), periodMonths)) - 1);
+        return (principal * (monthInterestRate * (Math.pow((1 + monthInterestRate), periodMonths)))) / ((Math.pow((1 + monthInterestRate), periodMonths)) - 1);
+    }
 
-        System.out.println(NumberFormat.getCurrencyInstance().format(mortgage));
-
-
+    public static String getCurrencyInstance(double mortgage) {
+        return NumberFormat.getCurrencyInstance().format(mortgage);
     }
 }
