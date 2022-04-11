@@ -36,7 +36,7 @@ public class Main {
 
         Principal principal = new Principal();
         AnnualInterestRate annualInterestRate = new AnnualInterestRate();
-        Period period= new Period();
+        Period period = new Period();
 
         int principalValue = principal.getValue(scanner);
         float annualInterestRateValue = annualInterestRate.getValue(scanner);
@@ -44,8 +44,13 @@ public class Main {
 
         double mortgage = calculateMortgage(annualInterestRateValue, periodValue, principalValue);
         String mortgageCurrencyInstance = getCurrencyInstance(mortgage);
+        System.out.println("\n" + "MORTGAGE");
+        System.out.println("--------");
+        System.out.println("Monthly Payments: " + mortgageCurrencyInstance + "\n");
 
-        System.out.println(mortgageCurrencyInstance);
+        System.out.println("PAYMENTS SCHEDULE");
+        System.out.println("--------");
+        printPaymentsSchedule(principalValue, annualInterestRateValue, periodValue);
 
     }
 
@@ -54,6 +59,29 @@ public class Main {
         Integer periodMonths = period * 12;
 
         return (principal * (monthInterestRate * (Math.pow((1 + monthInterestRate), periodMonths)))) / ((Math.pow((1 + monthInterestRate), periodMonths)) - 1);
+    }
+
+    public static double getRemainingLoan(Integer principal, Float monthInterestRate, Integer periodMonths, Integer paymentsMade) {
+
+        return principal * ((Math.pow((1 + monthInterestRate), periodMonths)) -
+                (Math.pow((1 + monthInterestRate), paymentsMade))) / ((Math.pow((1 + monthInterestRate), periodMonths)) - 1);
+    }
+
+    public static void printPaymentsSchedule(Integer principal, Float annualInterestRate, Integer period) {
+        Float monthInterestRate = annualInterestRate / 100 / 12;
+        Integer periodMonths = period * 12;
+        Integer paymentsMade = 1;
+
+        while (paymentsMade <= periodMonths) {
+
+            double remainingLoan = getRemainingLoan(principal, monthInterestRate, periodMonths, paymentsMade);
+            String remainingLoanCurrencyInstance = getCurrencyInstance(remainingLoan);
+            System.out.println(remainingLoanCurrencyInstance);
+
+            paymentsMade++;
+
+        }
+
     }
 
     public static String getCurrencyInstance(double mortgage) {
