@@ -1,37 +1,11 @@
 package com.learnjava;
 
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
-
 
 public class Main {
 
     public static void main(String[] args) {
-/*
-        Second project
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Number: ");
-        String userInput = scanner.nextLine().trim();
-
-        Integer userInputNumber = Integer.parseInt(userInput);
-
-        if(userInputNumber % 5 == 0 && userInputNumber % 3 == 0 ){
-            System.out.println("FizzBuzz");
-        }
-        else if (userInputNumber % 5 == 0 ){
-            System.out.println("Fizz");
-        }
-        else if(userInputNumber % 3 == 0 ){
-            System.out.println("Buzz");
-        }
-        else{
-            System.out.println(userInputNumber);
-        }
-*/
-
         Scanner scanner = new Scanner(System.in);
 
         Principal principal = new Principal();
@@ -42,14 +16,7 @@ public class Main {
         float annualInterestRateValue = annualInterestRate.getValue(scanner);
         int periodValue = period.getValue(scanner);
 
-        double mortgage = calculateMortgage(annualInterestRateValue, periodValue, principalValue);
-        String mortgageCurrencyInstance = getCurrencyInstance(mortgage);
-        System.out.println("\n" + "MORTGAGE");
-        System.out.println("--------");
-        System.out.println("Monthly Payments: " + mortgageCurrencyInstance + "\n");
-
-        System.out.println("PAYMENTS SCHEDULE");
-        System.out.println("--------");
+        printMortgage(principalValue, annualInterestRateValue, periodValue);
         printPaymentsSchedule(principalValue, annualInterestRateValue, periodValue);
 
     }
@@ -61,6 +28,14 @@ public class Main {
         return (principal * (monthInterestRate * (Math.pow((1 + monthInterestRate), periodMonths)))) / ((Math.pow((1 + monthInterestRate), periodMonths)) - 1);
     }
 
+    private static void printMortgage(int principalValue, float annualInterestRateValue, int periodValue) {
+        double mortgage = calculateMortgage(annualInterestRateValue, periodValue, principalValue);
+        String mortgageCurrencyInstance = getCurrencyInstance(mortgage);
+        System.out.println("\n" + "MORTGAGE");
+        System.out.println("--------");
+        System.out.println("Monthly Payments: " + mortgageCurrencyInstance + "\n");
+    }
+
     public static double getRemainingLoan(Integer principal, Float monthInterestRate, Integer periodMonths, Integer paymentsMade) {
 
         return principal * ((Math.pow((1 + monthInterestRate), periodMonths)) -
@@ -68,6 +43,9 @@ public class Main {
     }
 
     public static void printPaymentsSchedule(Integer principal, Float annualInterestRate, Integer period) {
+        System.out.println("PAYMENTS SCHEDULE");
+        System.out.println("--------");
+
         Float monthInterestRate = annualInterestRate / 100 / 12;
         Integer periodMonths = period * 12;
         Integer paymentsMade = 1;
