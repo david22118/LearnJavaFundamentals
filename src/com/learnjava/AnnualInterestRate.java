@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class AnnualInterestRate implements LoanValues <Float>{
     @Override
-    public Float getValue(Scanner scanner) {
+    public Float getValue() {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.print("Annual Interest Rate (0-10): ");
         Float annualInterestRate = scanner.nextFloat();
 

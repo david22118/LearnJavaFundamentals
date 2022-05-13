@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Principal implements LoanValues <Integer> {
     @Override
-    public Integer getValue(Scanner scanner) {
+    public Integer getValue() {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.print("Principal (1K-1M): ");
         Integer principal = scanner.nextInt();
 

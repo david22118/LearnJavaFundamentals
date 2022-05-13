@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class Period implements LoanValues <Integer> {
     @Override
-    public Integer getValue(Scanner scanner) {
+    public Integer getValue() {
+        Scanner scanner = new Scanner(System.in);
+
         System.out.print("Period (Years 1-30): ");
         Integer period = scanner.nextInt();
 
